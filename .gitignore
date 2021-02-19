@@ -1,0 +1,7 @@
+# Xcode
+*.DS_Store
+.DS_Store
+*.xcuserstate
+xcuserdatad
+#CocoaPods
+.idea

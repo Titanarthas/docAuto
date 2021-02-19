@@ -38,17 +38,17 @@ func GenerateDocStruct(methodType, urlPath  string, interfaceCom string, req, rs
 	apiCall.RequestComment = make(map[string][]string)
 
 	if val.Kind() == reflect.Struct {
-		generateVar(val, &apiCall)
+		generateVar(val, &apiCall, "")
 	}
 
 	GenerateHtml(&apiCall)
 }
 
-func generateVar(val reflect.Value, apiCall *models.ApiCall) {
+func generateVar(val reflect.Value, apiCall *models.ApiCall, parName string) {
 	if val.Kind() == reflect.Slice {
 		if val.Len() > 0 {
 			ti := val.Index(0)
-			generateVar(ti, apiCall)
+			generateVar(ti, apiCall, parName)
 		}
 		return
 	}
@@ -62,26 +62,30 @@ func generateVar(val reflect.Value, apiCall *models.ApiCall) {
 		t := val.Field(i)
 		tt := t.Type().Kind()
 
+		varName := typeField.Name
+		jsonName := typeField.Tag.Get(tagJson)
+		if len(jsonName) > 0 {
+			varName = jsonName
+		}
+
+		if parName != "" {
+			varName = parName + "/" + varName
+		}
+
 		if tt == reflect.Struct {
-			generateVar(t, apiCall)
+			generateVar(t, apiCall, varName)
 		} else if tt == reflect.Slice {
 			if t.Len() > 0 {
 				ti := t.Index(0)
 				if ti.Kind() == reflect.Struct {
-					generateVar(ti, apiCall)
+					generateVar(ti, apiCall, varName)
 				}
 
 			}
 		}
 
-		varName := typeField.Name
 		tag := typeField.Tag.Get(tagName)
 		varType := typeField.Type.String()
-		
-		jsonName := typeField.Tag.Get(tagJson)
-		if len(jsonName) > 0 {
-			varName = jsonName
-		}
 
 		apiCall.RequestComment[varName] = []string{varType, tag}
 	}
