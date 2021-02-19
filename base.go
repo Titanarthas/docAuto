@@ -221,6 +221,24 @@ const Template = `<!DOCTYPE html>
                     }
                 </script>
                 {{ end }}
+                {{ if $wrapperValue.ResponseComment }}
+                <p> <H4> Response Comments </H4> </p>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Comment</th>
+                    </tr>
+                    {{ range $key, $value := $wrapperValue.ResponseComment }}
+                    <tr>
+                        <td>{{ $key }}</td>
+                        {{ range $key1, $value1 := $value }}
+                        	<td> {{ $value1 }}</td>
+                        {{ end }}
+                    </tr>
+                    {{ end }}
+                </table>
+                {{ end }}
                 <hr>
             {{ end }}
         </div>

@@ -18,15 +18,6 @@ const (
 )
 
 func GenerateDocStruct(methodType, urlPath  string, interfaceCom string, req, rsp interface{}) {
-	val := reflect.ValueOf(req)
-	if val.Kind() == reflect.Interface || val.Kind() == reflect.Ptr {
-		val = val.Elem()
-	}
-	// we only accept structs
-	if val.Kind() != reflect.Struct {
-		// return
-	}
-
 	reqBody, _ := json.Marshal(req)
 	rspBody, _ := json.Marshal(rsp)
 	apiCall := models.ApiCall{}
@@ -36,19 +27,76 @@ func GenerateDocStruct(methodType, urlPath  string, interfaceCom string, req, rs
 	apiCall.ResponseBody = string(rspBody)
 	apiCall.ResponseCode = 200
 	apiCall.RequestComment = make(map[string][]string)
+	apiCall.ResponseComment = make(map[string][]string)
 
-	if val.Kind() == reflect.Struct {
-		generateVar(val, &apiCall, "")
+	/*val := reflect.ValueOf(req)
+	if val.Kind() == reflect.Interface || val.Kind() == reflect.Ptr {
+		val = val.Elem()
 	}
+	// we only accept structs
+	if val.Kind() != reflect.Struct {
+		// return
+	}
+	if val.Kind() == reflect.Struct {
+		generateVar(val, apiCall.RequestComment, "")
+	}*/
+	generateMap(req, apiCall.RequestComment)
+	generateMap(rsp, apiCall.ResponseComment)
 
 	GenerateHtml(&apiCall)
 }
+type X map[string]interface{}
+func generateMap(req interface{}, RequestComment map[string][]string) {
+	val := reflect.ValueOf(req)
+	if val.Kind() == reflect.Interface || val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
 
-func generateVar(val reflect.Value, apiCall *models.ApiCall, parName string) {
+	if val.Kind() == reflect.Map {
+		generateVarMap(val, RequestComment, "")
+	}
+	// we only accept structs
+	if val.Kind() != reflect.Struct {
+		// return
+	}
+	if val.Kind() == reflect.Struct {
+		generateVar(val, RequestComment, "")
+	}
+}
+
+func generateVarMap(val reflect.Value, RequestComment map[string][]string, parName string) {
+	if val.Kind() == reflect.Map {
+		res := reflect.MakeMap(val.Type())
+		keys := val.MapKeys()
+
+		for _, k := range keys {
+			key := k.Convert(res.Type().Key()) //.Convert(m.Type().Key())
+			value := val.MapIndex(key)
+
+			if value.Kind() == reflect.Interface {
+				value = value.Elem()
+				keyName := key.String()
+
+				if value.Kind() == reflect.Struct {
+					if len(parName) > 0 {
+						keyName = parName + "/" + keyName
+					}
+					generateVar(value, RequestComment, keyName)
+				}
+
+				typeName := value.Type().String()
+
+				RequestComment[keyName] = []string{typeName, ""}
+			}
+		}
+	}
+}
+
+func generateVar(val reflect.Value, RequestComment map[string][]string, parName string) {
 	if val.Kind() == reflect.Slice {
 		if val.Len() > 0 {
 			ti := val.Index(0)
-			generateVar(ti, apiCall, parName)
+			generateVar(ti, RequestComment, parName)
 		}
 		return
 	}
@@ -73,12 +121,12 @@ func generateVar(val reflect.Value, apiCall *models.ApiCall, parName string) {
 		}
 
 		if tt == reflect.Struct {
-			generateVar(t, apiCall, varName)
+			generateVar(t, RequestComment, varName)
 		} else if tt == reflect.Slice {
 			if t.Len() > 0 {
 				ti := t.Index(0)
 				if ti.Kind() == reflect.Struct {
-					generateVar(ti, apiCall, varName)
+					generateVar(ti, RequestComment, varName)
 				}
 
 			}
@@ -87,7 +135,7 @@ func generateVar(val reflect.Value, apiCall *models.ApiCall, parName string) {
 		tag := typeField.Tag.Get(tagName)
 		varType := typeField.Type.String()
 
-		apiCall.RequestComment[varName] = []string{varType, tag}
+		RequestComment[varName] = []string{varType, tag}
 	}
 }
 

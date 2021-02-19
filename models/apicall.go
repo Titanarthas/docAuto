@@ -13,6 +13,7 @@ type ApiCall struct {
 	ResponseHeader       map[string]string
 	RequestUrlParams     map[string]string
 	RequestComment       map[string][]string
+	ResponseComment       map[string][]string
 
 	RequestBody  string
 	ResponseBody string
