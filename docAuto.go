@@ -130,7 +130,7 @@ func generateVar(val reflect.Value, RequestComment map[string][]string, parName 
 				}
 
 			}
-		} else if tt == reflect.Ptr {
+		} else if tt == reflect.Ptr && !t.IsNil(){
 			t = t.Elem()
 			tt = t.Type().Kind()
 			if tt == reflect.Struct {
