@@ -130,6 +130,12 @@ func generateVar(val reflect.Value, RequestComment map[string][]string, parName 
 				}
 
 			}
+		} else if tt == reflect.Ptr {
+			t = t.Elem()
+			tt = t.Type().Kind()
+			if tt == reflect.Struct {
+				generateVar(t, RequestComment, varName)
+			}
 		}
 
 		tag := typeField.Tag.Get(tagName)

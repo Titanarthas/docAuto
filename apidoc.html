@@ -199,9 +199,45 @@
                     </tr>
                     
                     <tr>
-                        <td>type</td>
+                        <td>ctlp3</td>
+                        
+                        	<td> *main.CouponTakeListParams2</td>
+                        
+                        	<td> *测试</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>ctlp3/activity_id</td>
+                        
+                        	<td> []int64</td>
+                        
+                        	<td> 优惠券ID</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>ctlp3/type</td>
                         
                         	<td> int</td>
+                        
+                        	<td> 券类型，0：普通优惠券；1:纸质优惠券；2，会员专属</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>ctlp3/user_id</td>
+                        
+                        	<td> int64</td>
+                        
+                        	<td> 应用内领券必传</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>type</td>
+                        
+                        	<td> *int64</td>
                         
                         	<td> 券类型，0：普通优惠券；1:纸质优惠券；2，会员专属</td>
                         
@@ -222,14 +258,14 @@
                 
                 
                 <p> <H4> Request Body </H4> </p>
-                <pre id="request-body-0-0" class="prettyprint">{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0,&#34;ctlp&#34;:{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0},&#34;ctlp2&#34;:[{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0}]}</pre>
+                <pre id="request-body-0-0" class="prettyprint">{&#34;user_id&#34;:1,&#34;activity_id&#34;:null,&#34;type&#34;:1,&#34;ctlp&#34;:{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0},&#34;ctlp2&#34;:[{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0}],&#34;ctlp3&#34;:{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0}}</pre>
                 <script>
                      
                     var requestHeader = null ;
 
                     if (requestHeader["Content-Type"].includes("application/json")){
                         try {
-                            var jsonStr = spaceJson("{\"user_id\":0,\"activity_id\":null,\"type\":0,\"ctlp\":{\"user_id\":0,\"activity_id\":null,\"type\":0},\"ctlp2\":[{\"user_id\":0,\"activity_id\":null,\"type\":0}]}");
+                            var jsonStr = spaceJson("{\"user_id\":1,\"activity_id\":null,\"type\":1,\"ctlp\":{\"user_id\":0,\"activity_id\":null,\"type\":0},\"ctlp2\":[{\"user_id\":0,\"activity_id\":null,\"type\":0}],\"ctlp3\":{\"user_id\":0,\"activity_id\":null,\"type\":0}}");
                             document.getElementById('request-body-0-0').innerHTML = syntaxHighlight(jsonStr);
                         } catch (e) {
                              
@@ -242,14 +278,14 @@
                 
                 
                 <p> <H4> Response Body </H4> </p>
-                <pre class="prettyprint" id="response-body-0-0">{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0,&#34;ctlp&#34;:{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0},&#34;ctlp2&#34;:[{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0}]}</pre>
+                <pre class="prettyprint" id="response-body-0-0">{&#34;user_id&#34;:1,&#34;activity_id&#34;:null,&#34;type&#34;:1,&#34;ctlp&#34;:{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0},&#34;ctlp2&#34;:[{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0}],&#34;ctlp3&#34;:{&#34;user_id&#34;:0,&#34;activity_id&#34;:null,&#34;type&#34;:0}}</pre>
                 <script>
                      
                     var responseHeader = null ;
 
                     if (responseHeader["Content-Type"].includes("application/json")){
                         try {
-                            var jsonStr = spaceJson("{\"user_id\":0,\"activity_id\":null,\"type\":0,\"ctlp\":{\"user_id\":0,\"activity_id\":null,\"type\":0},\"ctlp2\":[{\"user_id\":0,\"activity_id\":null,\"type\":0}]}");
+                            var jsonStr = spaceJson("{\"user_id\":1,\"activity_id\":null,\"type\":1,\"ctlp\":{\"user_id\":0,\"activity_id\":null,\"type\":0},\"ctlp2\":[{\"user_id\":0,\"activity_id\":null,\"type\":0}],\"ctlp3\":{\"user_id\":0,\"activity_id\":null,\"type\":0}}");
                             document.getElementById('response-body-0-0').innerHTML = syntaxHighlight(jsonStr);
                         } catch (e) {
                              
@@ -348,9 +384,45 @@
                     </tr>
                     
                     <tr>
-                        <td>type</td>
+                        <td>ctlp3</td>
+                        
+                        	<td> *main.CouponTakeListParams2</td>
+                        
+                        	<td> *测试</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>ctlp3/activity_id</td>
+                        
+                        	<td> []int64</td>
+                        
+                        	<td> 优惠券ID</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>ctlp3/type</td>
                         
                         	<td> int</td>
+                        
+                        	<td> 券类型，0：普通优惠券；1:纸质优惠券；2，会员专属</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>ctlp3/user_id</td>
+                        
+                        	<td> int64</td>
+                        
+                        	<td> 应用内领券必传</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td>type</td>
+                        
+                        	<td> *int64</td>
                         
                         	<td> 券类型，0：普通优惠券；1:纸质优惠券；2，会员专属</td>
                         
